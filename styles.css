@@ -1,0 +1,51 @@
+/* Please make it pretty, ONLY AFTER implementing ALL your Javascript! */
+
+* { box-sizing: border-box }
+
+#product-overview, #shopping-cart {
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
+  background-color: #f8f8f8;
+  border-radius: 5px;
+  padding: 0.5em;
+  margin:  0 2em;
+}
+
+#product-overview h3, #shopping-cart h3 {
+  text-align: center;
+}
+
+#product-overview .product:hover {
+  background-color: #eee;
+}
+
+#product-overview span, #shopping-cart span{
+  display: inline-block;
+  width: 19%;
+  padding: 0 1rem;
+}
+
+#product-overview span.name, #shopping-cart span.name{
+  width: 60%;
+}
+
+#product-overview span.referenceNumber {
+  text-align: right;
+}
+
+.header-line {
+  font-weight: bold;
+  background-color: #fff;
+  font-size:  110%;
+}
+
+footer {
+  position: fixed;
+  background-color: #f8f8f8;
+  bottom: 0.2em;
+  box-shadow: 0 2px 6px 0 rgba(0,0,0,0.2);
+  padding-top: 1em;
+  padding-bottom: 0.4em;
+  left: 30%;
+  right: 30%;
+  text-align: center;
+}
