@@ -1,7 +1,7 @@
 // TODO:
 
 
-var departments = [
+const departments = [
   {
     department: 'mats',
     products: [
@@ -33,7 +33,7 @@ var departments = [
 ];
 
 // Declare `shoppingCart`, something where you will be storing all products that the user buys.
-var shoppingCart = [];
+let shoppingCart = [];
 // Declare `products`, the different that you will be selling under each of the departments.
 
 // var printProductsFromShoppingCart = function() {
@@ -41,13 +41,13 @@ var shoppingCart = [];
   // use the printProductsOnScreen function for inspiration
 // };
 
-var addProductToCart = function(productNumber) {
+const addProductToCart = function(productNumber) {
   console.log(productNumber);
   // Find the product in the array of objects with the correct reference number
   // Add the product to your shopping cart
 
-  for (var department of departments)
-    for (var product of department.products)
+  for (const department of departments)
+    for (const product of department.products)
       if (product.referenceNumber === parseInt(productNumber)) {
         shoppingCart.push(product);
         updateShoppingCart();
@@ -60,7 +60,7 @@ var addProductToCart = function(productNumber) {
 
 };
 
-var checkoutCustomer = function() {
+const checkoutCustomer = function() {
   //replace this with showing a nice goodbye message showing the amount to be paid.
   window.alert(`YOGA IS ALL ABOUT MOTHERFUCKING PEACE AND QUIET, SO PAY ME THE FUCKING ......${getTotalPrice()}...... DOLLARS YOU OWE ME SO YOU CAN RELAX! GO GO GO GO NOW NOW NOW NOW WHERE'S MY MONEY BITCH!`);
   //empty the shopping cart
@@ -69,9 +69,9 @@ var checkoutCustomer = function() {
   updateShoppingCart();
 };
 
-var updateShoppingCart = function (){
+const updateShoppingCart = function (){
   updateTotalPrice();
-  var elements = document.getElementsByClassName('of-shopping-cart');
+  const elements = document.getElementsByClassName('of-shopping-cart');
   while(elements.length > 0){
     elements[0].parentNode.removeChild(elements[0]);
   }
@@ -82,46 +82,46 @@ var updateShoppingCart = function (){
 // do not change the code below (but feel free to change it if your WHOLE project works!)
 //
 
-var getTotalPrice = function () {
-  var totalPrice = 0;
-  for (var product of shoppingCart) {
+const getTotalPrice = function () {
+  let totalPrice = 0;
+  for (const product of shoppingCart) {
     totalPrice += product.price;
   }
   return totalPrice;
 };
 
-var updateTotalPrice = function () {
+const updateTotalPrice = function () {
   document.getElementById('total-price').innerText = getTotalPrice();
 };
 
-var printProductsOnScreen = function (divName) {
+const printProductsOnScreen = function (divName) {
   return function (productsToPrint) {
-    for (var product of productsToPrint) {
+    for (const product of productsToPrint) {
 
       // create elements for refNr, name, price, with a class and the proper innerText
-      var referenceNumberElement = document.createElement('span');
+      let referenceNumberElement = document.createElement('span');
       referenceNumberElement.className = 'referenceNumber';
       referenceNumberElement.innerText = product.referenceNumber;
       referenceNumberElement.onclick = function () {
         //this method is called when the reference number is clicked
-        var productNumber = this.innerHTML;
+        const productNumber = this.innerHTML;
         //use the reference number to look up the product and add it to
         addProductToCart(productNumber);
       };
 
-      var nameElement = document.createElement('span');
+      let nameElement = document.createElement('span');
       nameElement.className = 'name';
       nameElement.innerText = product.name;
 
-      var priceElement = document.createElement('span');
+      let priceElement = document.createElement('span');
       priceElement.className = 'price';
       priceElement.innerText = product.price;
 
       // Wrap our just created elements in a div
-      var productElement = document.createElement('div');
+      let productElement = document.createElement('div');
       productElement.className = `product of-${divName}`;
 
-      for (var element of [referenceNumberElement, nameElement, priceElement])
+      for (const element of [referenceNumberElement, nameElement, priceElement])
         productElement.appendChild(element);
 
       // Hang that div on the page
@@ -130,47 +130,47 @@ var printProductsOnScreen = function (divName) {
   }
 };
 
-var printDepartmentsOnScreen = function (departmentsToPrint) {
-  for (var department of departmentsToPrint) {
+const printDepartmentsOnScreen = function (departmentsToPrint) {
+  for (const department of departmentsToPrint) {
 
-    var departmentHeaderElement = document.createElement('h2');
+    let departmentHeaderElement = document.createElement('h2');
     departmentHeaderElement.className = 'department-header';
     departmentHeaderElement.innerText = department.department;
 
-    var header_referenceNumberElement = document.createElement('span');
+    let header_referenceNumberElement = document.createElement('span');
     header_referenceNumberElement.className = 'header-line product reference-number';
     header_referenceNumberElement.innerText = 'Ref Nr';
 
-    var header_nameElement = document.createElement('span');
+    let header_nameElement = document.createElement('span');
     header_nameElement.className = 'header-line product name';
     header_nameElement.innerText = 'Name';
 
-    var header_priceElement = document.createElement('span');
+    let header_priceElement = document.createElement('span');
     header_priceElement.className = 'header-line product price';
     header_priceElement.innerText = 'Price';
 
-    var divId = `dept-of-${department.department}`;
+    let divId = `dept-of-${department.department}`;
 
-    var header_divElement = document.createElement('div');
+    let header_divElement = document.createElement('div');
     header_divElement.className = 'department';
     header_divElement.id = divId;
 
-    for (var element of [departmentHeaderElement, header_referenceNumberElement, header_nameElement, header_priceElement])
+    for (const element of [departmentHeaderElement, header_referenceNumberElement, header_nameElement, header_priceElement])
       header_divElement.appendChild(element);
 
     document.getElementById('product-overview').appendChild(header_divElement);
 
-    var printDepartmentOverview = printProductsOnScreen(divId);
+    const printDepartmentOverview = printProductsOnScreen(divId);
     printDepartmentOverview(department.products)
 
   }
 };
 
-var printCart = printProductsOnScreen('shopping-cart');
+const printCart = printProductsOnScreen('shopping-cart');
 // var printOverview = printProductsOnScreen('product-overview');
 
 document.onreadystatechange = function () {
-  if (document.readyState == "interactive") {
+  if (document.readyState === "interactive") {
     // printOverview(products);
     printDepartmentsOnScreen(departments);
     document.getElementById("checkout").onclick = function(){
