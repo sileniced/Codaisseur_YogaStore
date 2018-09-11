@@ -28,10 +28,12 @@ var addProductToCart = function(productNumber) {
     if (product.referenceNumber === parseInt(productNumber)) {
       shoppingCart.push(product);
       updateTotalPrice();
+      printProductsOnScreen([product], 'shopping-cart');
     }
   }
 
-  printProductsFromShoppingCart();
+  // printProductsFromShoppingCart(shoppingCart, 'shopping-cart');
+
 
   // calculate the total price of your cart, and use it:
 
@@ -55,8 +57,8 @@ var updateTotalPrice = function () {
   document.getElementById('total-price').innerText = totalPrice;
 };
 
-var printProductsOnScreen = function () {
-  for(var product of products){
+var printProductsOnScreen = function (productsToPrint, divName) {
+  for(var product of productsToPrint){
 
     // create elements for refNr, name, price, with a class and the proper innerText
     var referenceNumberElement = document.createElement('span');
@@ -86,13 +88,13 @@ var printProductsOnScreen = function () {
     productElement.appendChild(priceElement);
 
     // Hang that div on the page
-    document.getElementById('product-overview').appendChild(productElement);
+    document.getElementById(divName).appendChild(productElement);
   }
 };
 
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
-    printProductsOnScreen();
+    printProductsOnScreen(products, 'product-overview');
     document.getElementById("checkout").onclick = function(){
       checkoutCustomer();
     }
