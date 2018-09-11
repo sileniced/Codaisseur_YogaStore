@@ -28,11 +28,12 @@ var addProductToCart = function(productNumber) {
     if (product.referenceNumber === parseInt(productNumber)) {
       shoppingCart.push(product);
       updateTotalPrice();
-      printProductsOnScreen([product], 'shopping-cart');
+      resetShoppingCart();
+      printProductsOnScreen(shoppingCart, 'shopping-cart');
     }
   }
 
-  // printProductsFromShoppingCart(shoppingCart, 'shopping-cart');
+  // printProductsFromShoppingCart();
 
 
   // calculate the total price of your cart, and use it:
@@ -40,10 +41,19 @@ var addProductToCart = function(productNumber) {
 };
 
 var checkoutCustomer = function() {
-
   //replace this with showing a nice goodbye message showing the amount to be paid.
-  window.alert(`YOGA IS ALL ABOUT MOTHERFUCKING PEACE AND QUIET, SO PAY ME THE FUCKING ......${getTotalPrice()}...... DOLLARS SO YOU CAN RELAX!`)
+  window.alert(`YOGA IS ALL ABOUT MOTHERFUCKING PEACE AND QUIET, SO PAY ME THE FUCKING ......${getTotalPrice()}...... DOLLARS SO YOU CAN RELAX!`);
   //empty the shopping cart
+
+  shoppingCart = [];
+  resetShoppingCart();
+};
+
+var resetShoppingCart = function (){
+  var elements = document.getElementsByClassName('cart');
+  while(elements.length > 0){
+    elements[0].parentNode.removeChild(elements[0]);
+  }
 }
 
 //
@@ -59,7 +69,6 @@ var getTotalPrice = function () {
 }
 
 var updateTotalPrice = function () {
-
   document.getElementById('total-price').innerText = getTotalPrice();
 };
 
@@ -87,7 +96,8 @@ var printProductsOnScreen = function (productsToPrint, divName) {
 
     // Wrap our just created elements in a div
     var productElement = document.createElement('div');
-    productElement.className = 'product';
+    var className = divName === 'shopping-cart' ? 'product cart' : 'product';
+    productElement.className = className;
 
     productElement.appendChild(referenceNumberElement);
     productElement.appendChild(nameElement);
