@@ -62,7 +62,7 @@ var addProductToCart = function(productNumber) {
 
 var checkoutCustomer = function() {
   //replace this with showing a nice goodbye message showing the amount to be paid.
-  window.alert(`YOGA IS ALL ABOUT MOTHERFUCKING PEACE AND QUIET, SO PAY ME THE FUCKING ......${getTotalPrice()}...... DOLLARS SO YOU CAN RELAX!`);
+  window.alert(`YOGA IS ALL ABOUT MOTHERFUCKING PEACE AND QUIET, SO PAY ME THE FUCKING ......${getTotalPrice()}...... DOLLARS YOU OWE ME SO YOU CAN RELAX! GO GO GO GO NOW NOW NOW NOW WHERE'S MY MONEY BITCH!`);
   //empty the shopping cart
 
   shoppingCart = [];
