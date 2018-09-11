@@ -1,34 +1,46 @@
 // TODO:
 
-var products = [
-  { referenceNumber: 1231, name: "Super Lite Mat", price: 10 },
-  { referenceNumber: 1232, name: "Power Mat", price: 20 },
-  { referenceNumber: 1233, name: "Block", price: 30 },
-  { referenceNumber: 1234, name: "Meditation cushion", price: 30 },
-  { referenceNumber: 1235, name: "The best T-shirt", price: 200 },
-  { referenceNumber: 1236, name: "The cutest yoga pants", price: 300 },
-  { referenceNumber: 1237, name: "Bring Yoga To Life", price: 30 },
-  { referenceNumber: 1238, name: "Light On Yoga", price: 10 }
-]
+// var products = [
+//   { referenceNumber: 1231, name: "Super Lite Mat", price: 10 },
+//   { referenceNumber: 1232, name: "Power Mat", price: 20 },
+//   { referenceNumber: 1233, name: "Block", price: 30 },
+//   { referenceNumber: 1234, name: "Meditation cushion", price: 30 },
+//   { referenceNumber: 1235, name: "The best T-shirt", price: 200 },
+//   { referenceNumber: 1236, name: "The cutest yoga pants", price: 300 },
+//   { referenceNumber: 1237, name: "Bring Yoga To Life", price: 30 },
+//   { referenceNumber: 1238, name: "Light On Yoga", price: 10 }
+// ]
 
-// var products = {
-//   mats: [
-//     { referenceNumber: 1231, name: "Super Lite Mat", price: 10 },
-//     { referenceNumber: 1232, name: "Power Mat", price: 20 },
-//   ],
-//   props: [
-//     { referenceNumber: 1233, name: "Block", price: 30 },
-//     { referenceNumber: 1234, name: "Meditation cushion", price: 30 },
-//   ],
-//   clothes: [
-//     { referenceNumber: 1235, name: "The best T-shirt", price: 200 },
-//     { referenceNumber: 1236, name: "The cutest yoga pants", price: 300 },
-//   ],
-//   books: [
-//     { referenceNumber: 1237, name: "Bring Yoga To Life", price: 30 },
-//     { referenceNumber: 1238, name: "Light On Yoga", price: 10 },
-//   ]
-// };
+var products = [
+  {
+    department: 'mats',
+    products: [
+      { referenceNumber: 1231, name: "Super Lite Mat", price: 10 },
+      { referenceNumber: 1232, name: "Power Mat", price: 20 },
+    ]
+  },
+  {
+    department: 'props',
+    products: [
+      { referenceNumber: 1233, name: "Block", price: 30 },
+      { referenceNumber: 1234, name: "Meditation cushion", price: 30 },
+    ],
+  },
+  {
+    department: 'clothes',
+    products: [
+      { referenceNumber: 1235, name: "The best T-shirt", price: 200 },
+      { referenceNumber: 1236, name: "The cutest yoga pants", price: 300 },
+    ]
+  },
+  {
+    department: 'books',
+    products: [
+      { referenceNumber: 1237, name: "Bring Yoga To Life", price: 30 },
+      { referenceNumber: 1238, name: "Light On Yoga", price: 10 },
+    ]
+  }
+];
 
 // Declare `shoppingCart`, something where you will be storing all products that the user buys.
 var shoppingCart = [];
@@ -92,7 +104,7 @@ var updateTotalPrice = function () {
   document.getElementById('total-price').innerText = getTotalPrice();
 };
 
-var printProductsOnScreen = function(divName) {
+var printProductsOnScreen = function (divName) {
   return function (productsToPrint) {
     for (var product of productsToPrint) {
 
@@ -119,9 +131,8 @@ var printProductsOnScreen = function(divName) {
       var productElement = document.createElement('div');
       productElement.className = `product of-${divName}`;
 
-      productElement.appendChild(referenceNumberElement);
-      productElement.appendChild(nameElement);
-      productElement.appendChild(priceElement);
+      for (var element of [referenceNumberElement, nameElement, priceElement])
+        productElement.appendChild(element);
 
       // Hang that div on the page
       document.getElementById(divName).appendChild(productElement);
@@ -129,12 +140,47 @@ var printProductsOnScreen = function(divName) {
   }
 };
 
+var printDepartmentsOnScreen = function (departmentsToPrint) {
+  for (var department of departmentsToPrint) {
+
+    var departmentHeaderElement = document.createElement('h2');
+    departmentHeaderElement.className = 'department-header';
+    departmentHeaderElement.innerText = department.department;
+
+    var header_referenceNumberElement = document.createElement('span');
+    header_referenceNumberElement.className = 'header-line product reference-number';
+    header_referenceNumberElement.innerText = 'Ref Nr';
+
+    var header_nameElement = document.createElement('span');
+    header_nameElement.className = 'header-line product name';
+    header_nameElement.innerText = 'Name';
+
+    var header_priceElement = document.createElement('span');
+    header_priceElement.className = 'header-line product price';
+    header_priceElement.innerText = 'Price';
+
+    var header_divElement = document.createElement('div');
+    header_divElement.className = 'department';
+    header_divElement.id = `of-${department.department}`
+
+    for (var element of [departmentHeaderElement, header_referenceNumberElement, header_nameElement, header_priceElement])
+      header_divElement.appendChild(element);
+
+    document.getElementById('product-overview').appendChild(header_divElement);
+
+    var printDepartmentOverview = printProductsOnScreen(`of-${department.department}`);
+    printDepartmentOverview(department.products)
+
+  }
+};
+
 var printCart = printProductsOnScreen('shopping-cart');
-var printList = printProductsOnScreen('product-overview');
+// var printOverview = printProductsOnScreen('product-overview');
 
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
-    printList(products);
+    // printOverview(products);
+    printDepartmentsOnScreen(products);
     document.getElementById("checkout").onclick = function(){
       checkoutCustomer();
     }
