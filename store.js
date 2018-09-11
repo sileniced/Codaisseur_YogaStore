@@ -1,23 +1,43 @@
 // TODO:
+
 var products = [
-    { referenceNumber: 1231, name: "Super Lite Mat", price: 10 },
-    { referenceNumber: 1232, name: "Power Mat", price: 20 },
-    { referenceNumber: 1233, name: "Block", price: 30 },
-    { referenceNumber: 1234, name: "Meditation cushion", price: 30 },
-    { referenceNumber: 1235, name: "The best T-shirt", price: 200 },
-    { referenceNumber: 1236, name: "The cutest yoga pants", price: 300 },
-    { referenceNumber: 1237, name: "Bring Yoga To Life", price: 30 },
-    { referenceNumber: 1238, name: "Light On Yoga", price: 10 }
-];
+  { referenceNumber: 1231, name: "Super Lite Mat", price: 10 },
+  { referenceNumber: 1232, name: "Power Mat", price: 20 },
+  { referenceNumber: 1233, name: "Block", price: 30 },
+  { referenceNumber: 1234, name: "Meditation cushion", price: 30 },
+  { referenceNumber: 1235, name: "The best T-shirt", price: 200 },
+  { referenceNumber: 1236, name: "The cutest yoga pants", price: 300 },
+  { referenceNumber: 1237, name: "Bring Yoga To Life", price: 30 },
+  { referenceNumber: 1238, name: "Light On Yoga", price: 10 }
+]
+
+// var products = {
+//   mats: [
+//     { referenceNumber: 1231, name: "Super Lite Mat", price: 10 },
+//     { referenceNumber: 1232, name: "Power Mat", price: 20 },
+//   ],
+//   props: [
+//     { referenceNumber: 1233, name: "Block", price: 30 },
+//     { referenceNumber: 1234, name: "Meditation cushion", price: 30 },
+//   ],
+//   clothes: [
+//     { referenceNumber: 1235, name: "The best T-shirt", price: 200 },
+//     { referenceNumber: 1236, name: "The cutest yoga pants", price: 300 },
+//   ],
+//   books: [
+//     { referenceNumber: 1237, name: "Bring Yoga To Life", price: 30 },
+//     { referenceNumber: 1238, name: "Light On Yoga", price: 10 },
+//   ]
+// };
 
 // Declare `shoppingCart`, something where you will be storing all products that the user buys.
 var shoppingCart = [];
 // Declare `products`, the different that you will be selling under each of the departments.
 
-var printProductsFromShoppingCart = function() {
+// var printProductsFromShoppingCart = function() {
   // iterate over the shoppingCart and display the contents
   // use the printProductsOnScreen function for inspiration
-};
+// };
 
 var addProductToCart = function(productNumber) {
   console.log(productNumber);
@@ -53,7 +73,7 @@ var updateShoppingCart = function (){
   while(elements.length > 0){
     elements[0].parentNode.removeChild(elements[0]);
   }
-  if (shoppingCart !== []) printProductsOnScreen(shoppingCart, 'shopping-cart');
+  if (shoppingCart !== []) printCart(shoppingCart);
 }
 
 //
@@ -72,44 +92,49 @@ var updateTotalPrice = function () {
   document.getElementById('total-price').innerText = getTotalPrice();
 };
 
-var printProductsOnScreen = function (productsToPrint, divName) {
-  for(var product of productsToPrint){
+var printProductsOnScreen = function(divName) {
+  return function (productsToPrint) {
+    for (var product of productsToPrint) {
 
-    // create elements for refNr, name, price, with a class and the proper innerText
-    var referenceNumberElement = document.createElement('span');
-    referenceNumberElement.className  = 'referenceNumber';
-    referenceNumberElement.innerText = product.referenceNumber;
-    referenceNumberElement.onclick = function () {
-      //this method is called when the reference number is clicked
-      var productNumber = this.innerHTML;
-      //use the reference number to look up the product and add it to 
-      addProductToCart(productNumber);
-    };
+      // create elements for refNr, name, price, with a class and the proper innerText
+      var referenceNumberElement = document.createElement('span');
+      referenceNumberElement.className = 'referenceNumber';
+      referenceNumberElement.innerText = product.referenceNumber;
+      referenceNumberElement.onclick = function () {
+        //this method is called when the reference number is clicked
+        var productNumber = this.innerHTML;
+        //use the reference number to look up the product and add it to
+        addProductToCart(productNumber);
+      };
 
-    var nameElement = document.createElement('span');
-    nameElement.className  = 'name';
-    nameElement.innerText = product.name;
+      var nameElement = document.createElement('span');
+      nameElement.className = 'name';
+      nameElement.innerText = product.name;
 
-    var priceElement = document.createElement('span');
-    priceElement.className  = 'price';
-    priceElement.innerText = product.price;
+      var priceElement = document.createElement('span');
+      priceElement.className = 'price';
+      priceElement.innerText = product.price;
 
-    // Wrap our just created elements in a div
-    var productElement = document.createElement('div');
-    productElement.className = `product of-${divName}`;
+      // Wrap our just created elements in a div
+      var productElement = document.createElement('div');
+      productElement.className = `product of-${divName}`;
 
-    productElement.appendChild(referenceNumberElement);
-    productElement.appendChild(nameElement);
-    productElement.appendChild(priceElement);
+      productElement.appendChild(referenceNumberElement);
+      productElement.appendChild(nameElement);
+      productElement.appendChild(priceElement);
 
-    // Hang that div on the page
-    document.getElementById(divName).appendChild(productElement);
+      // Hang that div on the page
+      document.getElementById(divName).appendChild(productElement);
+    }
   }
 };
 
+var printCart = printProductsOnScreen('shopping-cart');
+var printList = printProductsOnScreen('product-overview');
+
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
-    printProductsOnScreen(products, 'product-overview');
+    printList(products);
     document.getElementById("checkout").onclick = function(){
       checkoutCustomer();
     }
