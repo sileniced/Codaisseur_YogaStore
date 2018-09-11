@@ -40,8 +40,9 @@ var addProductToCart = function(productNumber) {
 };
 
 var checkoutCustomer = function() {
+
   //replace this with showing a nice goodbye message showing the amount to be paid.
-  window.alert("Bye")
+  window.alert(`YOGA IS ALL ABOUT MOTHERFUCKING PEACE AND QUIET, SO PAY ME THE FUCKING ......${getTotalPrice()}...... DOLLARS SO YOU CAN RELAX!`)
   //empty the shopping cart
 }
 
@@ -49,12 +50,17 @@ var checkoutCustomer = function() {
 // do not change the code below (but feel free to change it if your WHOLE project works!)
 //
 
-var updateTotalPrice = function () {
+var getTotalPrice = function () {
   var totalPrice = 0;
   for (var product of shoppingCart) {
     totalPrice += product.price;
   }
-  document.getElementById('total-price').innerText = totalPrice;
+  return totalPrice;
+}
+
+var updateTotalPrice = function () {
+
+  document.getElementById('total-price').innerText = getTotalPrice();
 };
 
 var printProductsOnScreen = function (productsToPrint, divName) {
