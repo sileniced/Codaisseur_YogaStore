@@ -24,11 +24,17 @@ var addProductToCart = function(productNumber) {
   // Find the product in the array of objects with the correct reference number
   // Add the product to your shopping cart
 
+  for (var product of products) {
+    if (product.referenceNumber === parseInt(productNumber)) {
+      shoppingCart.push(product);
+      updateTotalPrice();
+    }
+  }
 
   printProductsFromShoppingCart();
 
   // calculate the total price of your cart, and use it:
-  updateTotalPrice(/*The variable holding the totol price*/);
+
 };
 
 var checkoutCustomer = function() {
@@ -41,8 +47,12 @@ var checkoutCustomer = function() {
 // do not change the code below (but feel free to change it if your WHOLE project works!)
 //
 
-var updateTotalPrice = function (amount = 0) {
-  document.getElementById('total-price').innerText = amount;
+var updateTotalPrice = function () {
+  var totalPrice = 0;
+  for (var product of shoppingCart) {
+    totalPrice += product.price;
+  }
+  document.getElementById('total-price').innerText = totalPrice;
 };
 
 var printProductsOnScreen = function () {
