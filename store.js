@@ -27,9 +27,7 @@ var addProductToCart = function(productNumber) {
   for (var product of products) {
     if (product.referenceNumber === parseInt(productNumber)) {
       shoppingCart.push(product);
-      updateTotalPrice();
-      resetShoppingCart();
-      printProductsOnScreen(shoppingCart, 'shopping-cart');
+      updateShoppingCart();
     }
   }
 
@@ -46,14 +44,16 @@ var checkoutCustomer = function() {
   //empty the shopping cart
 
   shoppingCart = [];
-  resetShoppingCart();
+  updateShoppingCart();
 };
 
-var resetShoppingCart = function (){
-  var elements = document.getElementsByClassName('cart');
+var updateShoppingCart = function (){
+  updateTotalPrice();
+  var elements = document.getElementsByClassName('of-shopping-cart');
   while(elements.length > 0){
     elements[0].parentNode.removeChild(elements[0]);
   }
+  if (shoppingCart !== []) printProductsOnScreen(shoppingCart, 'shopping-cart');
 }
 
 //
@@ -96,8 +96,7 @@ var printProductsOnScreen = function (productsToPrint, divName) {
 
     // Wrap our just created elements in a div
     var productElement = document.createElement('div');
-    var className = divName === 'shopping-cart' ? 'product cart' : 'product';
-    productElement.className = className;
+    productElement.className = `product of-${divName}`;
 
     productElement.appendChild(referenceNumberElement);
     productElement.appendChild(nameElement);
