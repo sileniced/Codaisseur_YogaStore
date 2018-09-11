@@ -11,7 +11,7 @@
 //   { referenceNumber: 1238, name: "Light On Yoga", price: 10 }
 // ]
 
-var products = [
+var departments = [
   {
     department: 'mats',
     products: [
@@ -56,12 +56,12 @@ var addProductToCart = function(productNumber) {
   // Find the product in the array of objects with the correct reference number
   // Add the product to your shopping cart
 
-  for (var product of products) {
-    if (product.referenceNumber === parseInt(productNumber)) {
-      shoppingCart.push(product);
-      updateShoppingCart();
-    }
-  }
+  for (var department of departments)
+    for (var product of department.products)
+      if (product.referenceNumber === parseInt(productNumber)) {
+        shoppingCart.push(product);
+        updateShoppingCart();
+      }
 
   // printProductsFromShoppingCart();
 
@@ -86,7 +86,7 @@ var updateShoppingCart = function (){
     elements[0].parentNode.removeChild(elements[0]);
   }
   if (shoppingCart !== []) printCart(shoppingCart);
-}
+};
 
 //
 // do not change the code below (but feel free to change it if your WHOLE project works!)
@@ -98,7 +98,7 @@ var getTotalPrice = function () {
     totalPrice += product.price;
   }
   return totalPrice;
-}
+};
 
 var updateTotalPrice = function () {
   document.getElementById('total-price').innerText = getTotalPrice();
@@ -159,16 +159,18 @@ var printDepartmentsOnScreen = function (departmentsToPrint) {
     header_priceElement.className = 'header-line product price';
     header_priceElement.innerText = 'Price';
 
+    var divId = `dept-of-${department.department}`;
+
     var header_divElement = document.createElement('div');
     header_divElement.className = 'department';
-    header_divElement.id = `of-${department.department}`
+    header_divElement.id = divId;
 
     for (var element of [departmentHeaderElement, header_referenceNumberElement, header_nameElement, header_priceElement])
       header_divElement.appendChild(element);
 
     document.getElementById('product-overview').appendChild(header_divElement);
 
-    var printDepartmentOverview = printProductsOnScreen(`of-${department.department}`);
+    var printDepartmentOverview = printProductsOnScreen(divId);
     printDepartmentOverview(department.products)
 
   }
@@ -180,7 +182,7 @@ var printCart = printProductsOnScreen('shopping-cart');
 document.onreadystatechange = function () {
   if (document.readyState == "interactive") {
     // printOverview(products);
-    printDepartmentsOnScreen(products);
+    printDepartmentsOnScreen(departments);
     document.getElementById("checkout").onclick = function(){
       checkoutCustomer();
     }
